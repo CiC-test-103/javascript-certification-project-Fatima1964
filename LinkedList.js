@@ -1,13 +1,14 @@
 // Necessary Imports (you will need to use this)
-const { Student } = require('./Student')
+const { Student } = require('./Student');
 
 /**
  * Node Class (GIVEN, you will need to use this)
  */
 class Node {
   // Public Fields
-  data               // Student
-  next               // Object
+  data; // Student
+  next; // Object
+
   /**
    * REQUIRES:  The fields specified above
    * EFFECTS:   Creates a new Node instance
@@ -26,9 +27,9 @@ class Node {
  */
 class LinkedList {
   // Public Fields
-  head              // Object
-  tail              // Object
-  length            // Number representing size of LinkedList
+  head; // Object
+  tail; // Object
+  length; // Number representing size of LinkedList
 
   /**
    * REQUIRES:  None
@@ -36,10 +37,9 @@ class LinkedList {
    * RETURNS:   None
    */
   constructor() {
-    // TODO
-    this.head = null; // MY COMMENT: Initialize head to null (empty list)
-    this.tail = null; // MY COMMENT: Initialize tail to null (empty list)
-    this.length = 0;  // MY COMMENT: Initialize length to 0 (no nodes in the list)
+    this.head = null; // Initialize head to null (empty list)
+    this.tail = null; // Initialize tail to null (empty list)
+    this.length = 0;  // Initialize length to 0 (no nodes in the list)
   }
 
   /**
@@ -51,18 +51,15 @@ class LinkedList {
    * - Think about adding to the 'end' of the LinkedList (Hint: tail)
    */
   addStudent(newStudent) {
-    // TODO
-    const newNode = new Node(newStudent); // MY COMMENT: Create a new node with the given student data
+    const newNode = new Node(newStudent); // Create a new node with the given student data
     if (!this.head) {
-      // MY COMMENT: If the list is empty, set both head and tail to the new node
-      this.head = newNode;
+      this.head = newNode; // If the list is empty, set both head and tail to the new node
       this.tail = newNode;
     } else {
-      // MY COMMENT: If the list is not empty, add the new node to the end and update the tail
-      this.tail.next = newNode;
+      this.tail.next = newNode; // If the list is not empty, add the new node to the end and update the tail
       this.tail = newNode;
     }
-    this.length++; // MY COMMENT: Increment the length of the list
+    this.length++; // Increment the length of the list
   }
 
   /**
@@ -74,21 +71,19 @@ class LinkedList {
    * - Think about how removal might update head or tail
    */
   removeStudent(email) {
-    // TODO
-    if (!this.head) return; // MY COMMENT: If the list is empty, do nothing
-    // If the head node is the one to remove
+    if (!this.head) return; // If the list is empty, do nothing
     if (this.head.data.getEmail() === email) {
-      this.head = this.head.next; // MY COMMENT: Update head to the next node
-      if (!this.head) this.tail = null; // MY COMMENT: If list becomes empty, update tail to null
-      this.length--; // MY COMMENT: Decrement the length of the list
+      this.head = this.head.next; // Update head to the next node
+      if (!this.head) this.tail = null; // If list becomes empty, update tail to null
+      this.length--; // Decrement the length of the list
       return;
     }
     let current = this.head;
     while (current.next) {
       if (current.next.data.getEmail() === email) {
-        current.next = current.next.next; // MY COMMENT: Remove the node by bypassing it
-        if (!current.next) this.tail = current; // MY COMMENT: If the last node is removed, update tail
-        this.length--; // MY COMMENT: Decrement the length of the list
+        current.next = current.next.next; // Remove the node by bypassing it
+        if (!current.next) this.tail = current; // If the last node is removed, update tail
+        this.length--; // Decrement the length of the list
         return;
       }
       current = current.next;
@@ -101,15 +96,14 @@ class LinkedList {
    * RETURNS:   The Student or -1 if not found
    */
   findStudent(email) {
-    // TODO
     let current = this.head;
     while (current) {
       if (current.data.getEmail() === email) {
-        return current.data; // MY COMMENT: Return the student if found
+        return current.data; // Return the student if found
       }
       current = current.next;
     }
-    return -1; // MY COMMENT: Return -1 if the student is not found
+    return -1; // Return -1 if the student is not found
   }
 
   /**
@@ -118,10 +112,13 @@ class LinkedList {
    * RETURNS:   None
    */
   #clearStudents() {
-    // TODO
-    this.head = null; // MY COMMENT: Reset head to null
-    this.tail = null; // MY COMMENT: Reset tail to null
-    this.length = 0;  // MY COMMENT: Reset length to 0
+    this.head = null; // Reset head to null
+    this.tail = null; // Reset tail to null
+    this.length = 0;  // Reset length to 0
+  }
+
+  clearStudents() {
+    this.#clearStudents(); // Call the private clear method
   }
 
   /**
@@ -133,14 +130,13 @@ class LinkedList {
    *  - Output should appear as: "JohnDoe, JaneDoe"
    */
   displayStudents() {
-    // TODO
     let result = [];
     let current = this.head;
     while (current) {
-      result.push(current.data.getName()); // MY COMMENT: Add each student's name to the result array
+      result.push(current.data.getName()); // Add each student's name to the result array
       current = current.next;
     }
-    return result.join(", "); // MY COMMENT: Join the names into a single string separated by commas
+    return result.join(", "); // Join the names into a single string separated by commas
   }
 
   /**
@@ -149,14 +145,13 @@ class LinkedList {
    * RETURNS:   A sorted array of students by name
    */
   #sortStudentsByName() {
-    // TODO
     let students = [];
     let current = this.head;
     while (current) {
-      students.push(current.data); // MY COMMENT: Add each student to the array
+      students.push(current.data); // Add each student to the array
       current = current.next;
     }
-    students.sort((a, b) => a.getName().localeCompare(b.getName())); // MY COMMENT: Sort students by name
+    students.sort((a, b) => a.getName().localeCompare(b.getName())); // Sort students by name
     return students;
   }
 
@@ -168,9 +163,8 @@ class LinkedList {
    * - Use sortStudentsByName()
    */
   filterBySpecialization(specialization) {
-    // TODO
-    const sortedStudents = this.#sortStudentsByName(); // MY COMMENT: Get sorted students
-    return sortedStudents.filter(student => student.getSpecialization() === specialization); // MY COMMENT: Filter by specialization
+    const sortedStudents = this.#sortStudentsByName(); // Get sorted students
+    return sortedStudents.filter(student => student.getSpecialization() === specialization); // Filter by specialization
   }
 
   /**
@@ -181,9 +175,8 @@ class LinkedList {
    * - Use sortStudentsByName()
    */
   filterByMinAge(minAge) {
-    // TODO
-    const sortedStudents = this.#sortStudentsByName(); // MY COMMENT: Get sorted students
-    return sortedStudents.filter(student => student.getYear() >= minAge); // MY COMMENT: Filter by minimum age
+    const sortedStudents = this.#sortStudentsByName(); // Get sorted students
+    return sortedStudents.filter(student => student.getYear() >= minAge); // Filter by minimum age
   }
 
   /**
@@ -192,7 +185,6 @@ class LinkedList {
    * RETURNS:   None
    */
   async saveToJson(fileName) {
-    // TODO
     const fs = require('fs').promises;
     let students = [];
     let current = this.head;
@@ -216,9 +208,8 @@ class LinkedList {
    *  - Use clearStudents() to perform overwriting
    */
   async loadFromJSON(fileName) {
-    // TODO
     const fs = require('fs').promises;
-    this.#clearStudents();
+    this.clearStudents(); // Call the public clear method
     const data = await fs.readFile(fileName, 'utf8');
     const students = JSON.parse(data);
     for (const student of students) {

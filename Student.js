@@ -1,9 +1,9 @@
 class Student {
   // Public Fields
-  name               // String(fullname no space in between)
-  year               // Number
-  email              // String
-  specialization     // String(must be written in camelCase)
+  name;               // String(fullname no space in between)
+  year;               // Number
+  email;              // String
+  specialization;     // String(must be written in camelCase)
 
   /**
    * REQUIRES:  The fields specified above
@@ -50,7 +50,7 @@ class Student {
    * RETURNS:   The student specialization (String)
    */
   getSpecialization() {
-    return this.specialization; 
+    return this.specialization;
   }
 
   /**
@@ -80,17 +80,15 @@ class Student {
     this.specialization = newSpecialization;
   }
 
-  // MY COMMENTS: Add a method to update the student's year
   /**
    * REQUIRES:  The student's new year (Number)
    * EFFECTS:   Modifies the student's year to match
    * RETURNS:   None
    */
   setYear(newYear) {
-    this.year = newYear;     
+    this.year = newYear;
   }
 
-  // MY COMMENTS: Add a method to check if the student is in their final year
   /**
    * REQUIRES:  None
    * EFFECTS:   None
@@ -101,4 +99,4 @@ class Student {
   }
 }
 
-module.exports = { Student }
+module.exports = { Student };
