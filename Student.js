@@ -1,16 +1,9 @@
-/**
- * Create a Student Class
- * The class should have the private fields:
- * - name, year, email, specialization
- * The class should have means to modify these fields
- * The class should have means to access these fields
- */
 class Student {
-  // Private Fields
-  #name               // String(fullname no space in between)
-  #year               // Number
-  #email              // String
-  #specialization     // String(must be written in camelCase)
+  // Public Fields
+  name               // String(fullname no space in between)
+  year               // Number
+  email              // String
+  specialization     // String(must be written in camelCase)
 
   /**
    * REQUIRES:  The fields specified above
@@ -18,10 +11,10 @@ class Student {
    * RETURNS:   None
    */
   constructor(name, year, email, specialization) {
-    this.#name = name;
-    this.#year = year;
-    this.#email = email;
-    this.#specialization = specialization;
+    this.name = name;
+    this.year = year;
+    this.email = email;
+    this.specialization = specialization;
   }
 
   /**
@@ -30,7 +23,7 @@ class Student {
    * RETURNS:   The student name (String)
    */
   getName() {
-    return this.#name;
+    return this.name;
   }
 
   /**
@@ -39,7 +32,7 @@ class Student {
    * RETURNS:   The student year (Number)
    */
   getYear() {
-    return this.#year;
+    return this.year;
   }
 
   /**
@@ -48,7 +41,7 @@ class Student {
    * RETURNS:   The student email (String)
    */
   getEmail() {
-    return this.#email;
+    return this.email;
   }
 
   /**
@@ -57,7 +50,7 @@ class Student {
    * RETURNS:   The student specialization (String)
    */
   getSpecialization() {
-    return this.#specialization; 
+    return this.specialization; 
   }
 
   /**
@@ -66,7 +59,7 @@ class Student {
    * RETURNS:   Student object as string
    */
   getString() {
-    return `Name: ${this.#name}, Year: ${this.#year}, Email: ${this.#email}, Specialization: ${this.#specialization}`;
+    return `Name: ${this.name}, Year: ${this.year}, Email: ${this.email}, Specialization: ${this.specialization}`;
   }
 
   /**
@@ -75,7 +68,7 @@ class Student {
    * RETURNS:   None
    */
   setEmail(newEmail) {
-    this.#email = newEmail;
+    this.email = newEmail;
   }
 
   /**
@@ -84,7 +77,27 @@ class Student {
    * RETURNS:   The student specialization (String)
    */
   setSpecialization(newSpecialization) {
-    this.#specialization = newSpecialization;
+    this.specialization = newSpecialization;
+  }
+
+  // MY COMMENTS: Add a method to update the student's year
+  /**
+   * REQUIRES:  The student's new year (Number)
+   * EFFECTS:   Modifies the student's year to match
+   * RETURNS:   None
+   */
+  setYear(newYear) {
+    this.year = newYear;     
+  }
+
+  // MY COMMENTS: Add a method to check if the student is in their final year
+  /**
+   * REQUIRES:  None
+   * EFFECTS:   None
+   * RETURNS:   Boolean (true if the student is in their final year, otherwise false)
+   */
+  isFinalYear() {
+    return this.year === 4; // Assuming 4 is the final year
   }
 }
 

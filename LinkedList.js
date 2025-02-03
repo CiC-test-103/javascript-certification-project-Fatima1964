@@ -37,6 +37,9 @@ class LinkedList {
    */
   constructor() {
     // TODO
+    this.head = null; // MY COMMENT: Initialize head to null (empty list)
+    this.tail = null; // MY COMMENT: Initialize tail to null (empty list)
+    this.length = 0;  // MY COMMENT: Initialize length to 0 (no nodes in the list)
   }
 
   /**
@@ -49,6 +52,17 @@ class LinkedList {
    */
   addStudent(newStudent) {
     // TODO
+    const newNode = new Node(newStudent); // MY COMMENT: Create a new node with the given student data
+    if (!this.head) {
+      // MY COMMENT: If the list is empty, set both head and tail to the new node
+      this.head = newNode;
+      this.tail = newNode;
+    } else {
+      // MY COMMENT: If the list is not empty, add the new node to the end and update the tail
+      this.tail.next = newNode;
+      this.tail = newNode;
+    }
+    this.length++; // MY COMMENT: Increment the length of the list
   }
 
   /**
@@ -61,6 +75,26 @@ class LinkedList {
    */
   removeStudent(email) {
     // TODO
+    if (!this.head) return; // MY COMMENT: If the list is empty, do nothing
+
+    // If the head node is the one to remove
+    if (this.head.data.getEmail() === email) {
+      this.head = this.head.next; // MY COMMENT: Update head to the next node
+      if (!this.head) this.tail = null; // MY COMMENT: If list becomes empty, update tail to null
+      this.length--; // MY COMMENT: Decrement the length of the list
+      return;
+    }
+
+    let current = this.head;
+    while (current.next) {
+      if (current.next.data.getEmail() === email) {
+        current.next = current.next.next; // MY COMMENT: Remove the node by bypassing it
+        if (!current.next) this.tail = current; // MY COMMENT: If the last node is removed, update tail
+        this.length--; // MY COMMENT: Decrement the length of the list
+        return;
+      }
+      current = current.next;
+    }
   }
 
   /**
@@ -70,7 +104,14 @@ class LinkedList {
    */
   findStudent(email) {
     // TODO
-    return -1
+    let current = this.head;
+    while (current) {
+      if (current.data.getEmail() === email) {
+        return current.data; // MY COMMENT: Return the student if found
+      }
+      current = current.next;
+    }
+    return -1; // MY COMMENT: Return -1 if the student is not found
   }
 
   /**
@@ -80,6 +121,9 @@ class LinkedList {
    */
   #clearStudents() {
     // TODO
+    this.head = null; // MY COMMENT: Reset head to null
+    this.tail = null; // MY COMMENT: Reset tail to null
+    this.length = 0;  // MY COMMENT: Reset length to 0
   }
 
   /**
@@ -92,7 +136,13 @@ class LinkedList {
    */
   displayStudents() {
     // TODO
-    return "";
+    let result = [];
+    let current = this.head;
+    while (current) {
+      result.push(current.data.getName()); // MY COMMENT: Add each student's name to the result array
+      current = current.next;
+    }
+    return result.join(", "); // MY COMMENT: Join the names into a single string separated by commas
   }
 
   /**
@@ -102,7 +152,14 @@ class LinkedList {
    */
   #sortStudentsByName() {
     // TODO
-    return [];
+    let students = [];
+    let current = this.head;
+    while (current) {
+      students.push(current.data); // MY COMMENT: Add each student to the array
+      current = current.next;
+    }
+    students.sort((a, b) => a.getName().localeCompare(b.getName())); // MY COMMENT: Sort students by name
+    return students;
   }
 
   /**
@@ -114,7 +171,8 @@ class LinkedList {
    */
   filterBySpecialization(specialization) {
     // TODO
-    return [];
+    const sortedStudents = this.#sortStudentsByName(); // MY COMMENT: Get sorted students
+    return sortedStudents.filter(student => student.getSpecialization() === specialization); // MY COMMENT: Filter by specialization
   }
 
   /**
@@ -126,7 +184,8 @@ class LinkedList {
    */
   filterByMinAge(minAge) {
     // TODO
-    return [];
+    const sortedStudents = this.#sortStudentsByName(); // MY COMMENT: Get sorted students
+    return sortedStudents.filter(student => student.getYear() >= minAge); // MY COMMENT: Filter by minimum age
   }
 
   /**
@@ -136,6 +195,19 @@ class LinkedList {
    */
   async saveToJson(fileName) {
     // TODO
+    const fs = require('fs').promises;
+    let students = [];
+    let current = this.head;
+    while (current) {
+      students.push({
+        name: current.data.getName(),
+        year: current.data.getYear(),
+        email: current.data.getEmail(),
+        specialization: current.data.getSpecialization()
+      }); // MY COMMENT: Add each student's data to the array
+      current = current.next;
+    }
+    await fs.writeFile(fileName, JSON.stringify(students, null, 2)); // MY COMMENT: Write the array to a JSON file
   }
 
   /**
@@ -147,8 +219,15 @@ class LinkedList {
    */
   async loadFromJSON(fileName) {
     // TODO
+    const fs = require('fs').promises;
+    this.#clearStudents(); // MY COMMENT: Clear the current list
+    const data = await fs.readFile(fileName, 'utf8'); // MY COMMENT: Read the JSON file
+    const students = JSON.parse(data); // MY COMMENT: Parse the JSON data
+    for (const student of students) {
+      const newStudent = new Student(student.name, student.year, student.email, student.specialization); // MY COMMENT: Create a new Student object
+      this.addStudent(newStudent); // MY COMMENT: Add the student to the list
+    }
   }
-
 }
 
 module.exports = { LinkedList }
