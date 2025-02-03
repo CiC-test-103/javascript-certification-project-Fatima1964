@@ -196,6 +196,3 @@ rl.on('line', async (input) => {
 rl.on('close', () => {
   console.log('Goodbye!');
 });
-git add .
-git commit -m "commit message"
-git push
